@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    
+
     <div class="whole-document">
         <h1>Audio Prescription</h1>
         <div class="form">
@@ -19,42 +19,20 @@
             <label class="id-field">Email id</label>
             <input type="email" id="emailID">
 
-            <audio id="audio" controls></audio>
-            <button id="start-button">Start Recording</button>
-            <button id="stop-button">Stop Recording</button>
+            <br><br><br>
+            <button type="button" id="record">Record</button>
+            <button type="button" id="stopRecord" disabled>Stop</button>
 
-            
+            <audio id="recordedAudio"></audio>
+
+
+            <script src="{{ url_for('static', filename='src/ui.js') }}"></script>
+            <hr><br><br>
+            <button id="submit">Submit</button>
+
         </div>
     </div>
-    <script>
-        const startButton = document.getElementById('start-button');
-        const stopButton = document.getElementById('stop-button');
-        const audio = document.getElementById('audio');
 
-        startButton.addEventListener('click', async () => {
-            // Request access to the user's microphone
-            const stream = await navigator.mediaDevices.getUserMedia({
-                audio: true
-            });
-
-            // Create a new MediaRecorder object and start recording
-            const mediaRecorder = new MediaRecorder(stream);
-            mediaRecorder.start();
-
-            // Save the recorded audio as a Blob
-            const audioChunks = [];
-            mediaRecorder.addEventListener('dataavailable', (event) => {
-                audioChunks.push(event.data);
-            });
-
-            stopButton.addEventListener('click', () => {
-                mediaRecorder.stop();
-                const audioBlob = new Blob(audioChunks);
-                const audioUrl = URL.createObjectURL(audioBlob);
-                audio.src = audioUrl;
-            });
-        });
-    </script>
 </body>
 
 </html>

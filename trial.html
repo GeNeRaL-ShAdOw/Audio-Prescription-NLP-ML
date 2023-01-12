@@ -1,45 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <audio id="audio" controls></audio>
-<button id="start-button">Start Recording</button>
-<button id="stop-button">Stop Recording</button>
+<html>
+  <head>
+    <title>Recorder App</title>
+    
+  </head>
+  <h2>Recorder App</h2>
+  <p>
+    <button type="button" id="record">Record</button>
+    <button type="button" id="stopRecord" disabled>Stop</button>
+  </p>
+  <p>
+    <audio id="recordedAudio"></audio>        
+  </p>
 
-<script>
-const startButton = document.getElementById('start-button');
-const stopButton = document.getElementById('stop-button');
-const audio = document.getElementById('audio');
+  <script> 
+    navigator.mediaDevices.getUserMedia({audio:true})
+    .then(stream => {handlerFunction(stream)})
 
-startButton.addEventListener('click', async () => {
-  // Request access to the user's microphone
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  
-  // Create a new MediaRecorder object and start recording
-  const mediaRecorder = new MediaRecorder(stream);
-  mediaRecorder.start();
-  alert("recording started");
-  // Save the recorded audio as a Blob
-  const audioChunks = [];
-  mediaRecorder.addEventListener('dataavailable', (event) => {
-    audioChunks.push(event.data);
-  });
-  alert("recording started");
-  stopButton.addEventListener('click', () => {
-    alert("recording stop");
-    mediaRecorder.stop();
-    alert("recording stop");
-    const audioBlob = new Blob(audioChunks);
-    const audioUrl = URL.createObjectURL(audioBlob);
-    audio.src = audioUrl;
-  });
-});
-
-</script>
-</body>
+    function handlerFunction(stream) {
+      rec = new MediaRecorder(stream);
+      rec.ondataavailable = e => {
+        audioChunks.push(e.data);
+        if (rec.state == "inactive"){
+          let blob = new Blob(audioChunks,{type:'audio/mp3'});
+          recordedAudio.src = URL.createObjectURL(blob);
+          recordedAudio.controls=true;
+          recordedAudio.autoplay=true;
+          sendData(blob)
+          }
+        }
+      }
+    
+    function sendData(data) {}
+      record.onclick = e => {
+        record.disabled = true;
+        record.style.backgroundColor = "blue"
+        stopRecord.disabled=false;
+        audioChunks = [];
+        rec.start();
+        }
+      stopRecord.onclick = e => {
+        record.disabled = false;
+        stop.disabled=true;
+        record.style.backgroundColor = "red"
+        rec.stop();
+        }
+  </script>
 </html>
