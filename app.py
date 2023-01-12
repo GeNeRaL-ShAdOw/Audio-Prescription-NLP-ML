@@ -10,7 +10,10 @@ def UI():
 @app.route('/audioRecog', methods=['GET','POST'])
 def audioRecog():
     print("audioRecog")
-    
+    audioFile=request.files.get("myAudio")
+    path='./videos/sample.wav'
+    audioFile.save(path)
+    print(type(audioFile))
     return "I"
 
 
