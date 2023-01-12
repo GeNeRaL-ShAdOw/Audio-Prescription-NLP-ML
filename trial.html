@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <audio id="audio" controls></audio>
+<button id="start-button">Start Recording</button>
+<button id="stop-button">Stop Recording</button>
+
+<script>
+const startButton = document.getElementById('start-button');
+const stopButton = document.getElementById('stop-button');
+const audio = document.getElementById('audio');
+
+startButton.addEventListener('click', async () => {
+  // Request access to the user's microphone
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  
+  // Create a new MediaRecorder object and start recording
+  const mediaRecorder = new MediaRecorder(stream);
+  mediaRecorder.start();
+  alert("recording started");
+  // Save the recorded audio as a Blob
+  const audioChunks = [];
+  mediaRecorder.addEventListener('dataavailable', (event) => {
+    audioChunks.push(event.data);
+  });
+  alert("recording started");
+  stopButton.addEventListener('click', () => {
+    alert("recording stop");
+    mediaRecorder.stop();
+    alert("recording stop");
+    const audioBlob = new Blob(audioChunks);
+    const audioUrl = URL.createObjectURL(audioBlob);
+    audio.src = audioUrl;
+  });
+});
+
+</script>
+</body>
+</html>
