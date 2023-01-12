@@ -38,21 +38,6 @@ stopRecord.onclick = e => {
     rec.stop();
 }
 
-// function uploadAudio(blob) {
-//     let data = new FormData();
-//     data.append('file', audioBlob);
-//     return axios
-//         .post("http://127.0.0.1:5000/audioRecog", data, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data',
-//             },
-//         })
-//         .then(res => {
-//             console.log(res)
-//             return res
-//         });
-// }
-
 function sendAudio(blob){
     var wavFile = new File([ blob ], "audio.wav");   
     var form    = new FormData();
@@ -70,4 +55,14 @@ function sendAudio(blob){
                 console.log(getData);
             }
         });
+}
+
+function insertIntoDB(){
+    var name=document.getElementById("name").value;
+    var emailID=document.getElementById("emailID").value;
+
+    $.ajax({
+		url: "http://127.0.0.1:5000/insert?name=" + name + "&email=" + emailID,
+		context: document.body
+	});
 }
