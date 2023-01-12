@@ -33,7 +33,7 @@
     function sendData(data) {}
       record.onclick = e => {
         record.disabled = true;
-        record.style.backgroundColor = "blue"
+        // record.style.backgroundColor = "blue"
         stopRecord.disabled=false;
         audioChunks = [];
         rec.start();
@@ -41,7 +41,7 @@
       stopRecord.onclick = e => {
         record.disabled = false;
         stop.disabled=true;
-        record.style.backgroundColor = "red"
+        // record.style.backgroundColor = "red"
         rec.stop();
         }
   </script>
