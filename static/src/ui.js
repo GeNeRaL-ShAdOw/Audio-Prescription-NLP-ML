@@ -14,7 +14,7 @@ function handlerFunction(stream) {
                 type: 'audio/mp3'
             });
             recordedAudio.src = URL.createObjectURL(blob);
-            alert("This is audio:", (blob));
+            alert("Thank you for providing us with the audio. Please wait until your text gets transcribed, as it may take up to a minute.");
             recordedAudio.controls = true;
             recordedAudio.autoplay = true;
             sendData(blob)

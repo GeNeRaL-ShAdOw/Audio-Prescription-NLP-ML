@@ -3,13 +3,14 @@ import mysql.connector
 from flask_mysqldb import MySQL
 import mysql
 from datetime import date
+from workonaudio import *
 
 app = Flask(__name__)
 
 db = MySQL(app);
 
 def executeQuery(query,values):
-	conn = mysql.connector.connect(user='root', password='BTWin123!', host='127.0.0.1', database='world')
+	conn = mysql.connector.connect(user='root', password='GeNeRaL@21', host='127.0.0.1', database='world')
 	cursor = conn.cursor()
 	cursor.execute(query, values)
 	conn.commit()
@@ -28,7 +29,7 @@ def insert():
     DOP=date.today()
 
     values=[name, emailID, DOP, result]
-    query="INSERT INTO audioPrescription(Name,emailID,DOP,result) VALUES(%s,%s,%s,%s)"
+    query="INSERT INTO audioprescription(Name,emailID,DOP,result) VALUES(%s,%s,%s,%s)"
     executeQuery(query,values)
     return "I"
 
@@ -36,9 +37,10 @@ def insert():
 def audioRecog():
     print("audioRecog")
     audioFile=request.files.get("myAudio")
-    path='./videos/sample.wav'
+    path='./audio/sample.wav'
     audioFile.save(path)
-    print(type(audioFile))
+    filename(path)
+    print('Please wait while the audio gets transcribed. This process may take up to a minute.')
     return "I"
 
 if __name__ == '__main__':
