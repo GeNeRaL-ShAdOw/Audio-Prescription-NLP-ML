@@ -4,13 +4,10 @@ from flask_mysqldb import MySQL
 import mysql
 from datetime import date
 from workonaudio import *
-import requests
 
 app = Flask(__name__)
 
 db = MySQL(app);
-
-patient_id=''
 
 def executeQuery(query,values):
 	conn = mysql.connector.connect(user='root', password='GeNeRaL@21', host='127.0.0.1', database='world')
@@ -26,13 +23,15 @@ def UI():
 @app.route('/insert', methods=['GET','POST'])
 def insert():
     name=request.args.get("name")
+    print(name)
     emailID=request.args.get("email")
     result="TBD"
     DOP=date.today()
+
     values=[name, emailID, DOP, result]
     query="INSERT INTO audioprescription(Name,emailID,DOP,result) VALUES(%s,%s,%s,%s)"
     executeQuery(query,values)
-    return 'u'
+    return "I"
 
 @app.route('/audioRecog', methods=['GET','POST'])
 def audioRecog():
